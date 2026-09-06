@@ -4,7 +4,7 @@ import ThemeToggle from "@/components/ThemeToggle";
 
 const navItems = [
   { to: "/", label: "Dashboard", end: true },
-  { to: "/add", label: "Add Transaction" },
+  { to: "/add", label: "Transaction" },
   { to: "/summary", label: "Summary" },
 ];
 
@@ -19,8 +19,8 @@ export default function Layout() {
           >
             Budget Tracker
           </Link>
-          <div className="flex items-center gap-2">
-            <nav className="flex gap-1 overflow-x-auto -mx-1 px-1 sm:mx-0 sm:px-0">
+          <div className="flex flex-wrap items-center gap-1.5">
+            <nav className="flex flex-wrap gap-1">
               {navItems.map((item) => (
                 <NavLink
                   key={item.to}
@@ -28,7 +28,7 @@ export default function Layout() {
                   end={item.end}
                   className={({ isActive }) =>
                     cn(
-                      "shrink-0 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium whitespace-nowrap transition-colors",
+                      "px-2 py-1 rounded-lg text-[0.7rem] sm:text-sm font-medium whitespace-nowrap transition-colors",
                       isActive
                         ? "bg-primary text-primary-foreground"
                         : "text-muted-foreground hover:bg-muted hover:text-foreground"

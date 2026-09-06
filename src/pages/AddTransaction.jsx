@@ -40,7 +40,7 @@ export default function AddTransaction() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">Add Transaction</h1>
+        <h1 className="text-2xl font-bold">Transaction</h1>
         <Link to="/" className="text-sm text-muted-foreground hover:underline">
           Back to Dashboard
         </Link>
