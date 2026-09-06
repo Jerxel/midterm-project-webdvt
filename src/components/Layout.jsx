@@ -1,4 +1,4 @@
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -12,7 +12,9 @@ export default function Layout() {
     <div className="min-h-screen bg-background text-foreground">
       <header className="border-b border-border">
         <div className="max-w-3xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
-          <span className="text-lg font-bold">Budget Tracker</span>
+          <Link to="/about" className="text-lg font-bold hover:underline">
+            Budget Tracker
+          </Link>
           <nav className="flex gap-1">
             {navItems.map((item) => (
               <NavLink
