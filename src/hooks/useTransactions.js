@@ -44,7 +44,7 @@ export function useTransactions() {
   const addTransaction = useCallback((transaction) => {
     const newTransaction = {
       id: crypto.randomUUID(),
-      date: new Date().toISOString().split("T")[0],
+      date: transaction.date || new Date().toISOString().split("T")[0],
       ...transaction,
       amount: parseFloat(transaction.amount),
     };

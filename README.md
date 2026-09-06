@@ -9,6 +9,7 @@ A simple budget tracking app built with React and Vite. Log income and expenses,
 - **Transaction Detail** — view, edit, or delete an individual transaction
 - **Summary** — see spending broken down by category with percentage share
 - **Dark / Light mode** — theme preference is saved and respected across sessions
+- **About** — a short page describing the app, accessible from the "Budget Tracker" header link
 - All data is stored locally in the browser (`localStorage`) — nothing is sent to a server
 
 ## Tech Stack
@@ -19,6 +20,7 @@ A simple budget tracking app built with React and Vite. Log income and expenses,
 - [Tailwind CSS](https://tailwindcss.com/) v4 for styling
 - [shadcn] for the base component styling/config
 - [base-ui](https://base-ui.com/) + [class-variance-authority](https://cva.style/) for UI primitives
+- [react-day-picker](https://daypicker.dev/) for the date picker on the Add Transaction form
 
 ## Getting Started
 

@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { useTransactions } from "@/hooks/useTransactions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { DatePicker } from "@/components/ui/date-picker";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
 export default function AddTransaction() {
@@ -13,6 +14,7 @@ export default function AddTransaction() {
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
   const [type, setType] = useState("expense");
+  const [date, setDate] = useState(() => new Date().toISOString().split("T")[0]);
   const [errors, setErrors] = useState({});
 
   function validate() {
@@ -24,6 +26,7 @@ export default function AddTransaction() {
       nextErrors.amount = "Amount must be a number greater than 0.";
     }
     if (!category.trim()) nextErrors.category = "Category is required.";
+    if (!date) nextErrors.date = "Date is required.";
     return nextErrors;
   }
 
@@ -33,7 +36,7 @@ export default function AddTransaction() {
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    addTransaction({ description: description.trim(), amount, category: category.trim(), type });
+    addTransaction({ description: description.trim(), amount, category: category.trim(), type, date });
     navigate("/");
   }
 
@@ -104,7 +107,13 @@ export default function AddTransaction() {
                 <option value="income">Income</option>
               </select>
             </div>
-
+            <div className="space-y-1">
+              <label className="text-sm text-muted-foreground">Date</label>
+              <DatePicker value={date} onChange={setDate} />
+              {errors.date && (
+                <p className="text-xs text-destructive">{errors.date}</p>
+              )}
+            </div>
             <Button type="submit" className="w-full">
               Add Transaction
             </Button>
