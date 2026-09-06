@@ -18,7 +18,7 @@ A simple budget tracking app built with React and Vite. Log income and expenses,
 - [Vite](https://vite.dev/)
 - [React Router](https://reactrouter.com/) for client-side routing
 - [Tailwind CSS](https://tailwindcss.com/) v4 for styling
-- [shadcn] for the base component styling/config
+- [shadcn](https://ui.shadcn.com/) for the base component styling/config
 - [base-ui](https://base-ui.com/) + [class-variance-authority](https://cva.style/) for UI primitives
 - [react-day-picker](https://daypicker.dev/) for the date picker on the Add Transaction form
 

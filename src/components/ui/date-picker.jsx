@@ -13,7 +13,7 @@ function formatDisplay(dateStr) {
 
 export function DatePicker({ value, onChange, className }) {
   const [open, setOpen] = useState(false);
-  const [coords, setCoords] = useState({ top: 0, left: 0, width: 0 });
+  const [coords, setCoords] = useState({ mode: "anchored", top: 0, left: 0, width: 0 });
   const buttonRef = useRef(null);
   const popoverRef = useRef(null);
 
@@ -33,19 +33,33 @@ export function DatePicker({ value, onChange, className }) {
   function toggleOpen() {
   if (!open && buttonRef.current) {
     const rect = buttonRef.current.getBoundingClientRect();
-    const popoverHeight = 340; // approximate calendar height
-    const popoverWidth = 300; // approximate calendar width
+    const popoverWidth = 300;
     const viewportWidth = window.innerWidth;
+
+    // On narrow/mobile screens, don't try to anchor the calendar near
+    // the field — there's rarely enough room, and the math for where
+    // to place it gets unreliable. Just center it as an overlay.
+    const isMobile = viewportWidth < 640;
+    if (isMobile) {
+      setCoords({ mode: "center" });
+      setOpen((o) => !o);
+      return;
+    }
+
     let left = rect.left + window.scrollX;
-    // Clamp so the popover doesn't overflow past the right edge
     if (left + popoverWidth > viewportWidth) {
       left = Math.max(8, viewportWidth - popoverWidth - 8);
     }
-    setCoords({
-      top: rect.top + window.scrollY - popoverHeight - 8,
-      left,
-      width: rect.width,
-    });
+    const popoverHeight = 340;
+    const viewportHeight = window.innerHeight;
+    const spaceBelow = viewportHeight - rect.bottom;
+    const spaceAbove = rect.top;
+    const openUpward = spaceBelow < popoverHeight + 8 && spaceAbove > spaceBelow;
+    const top = openUpward
+      ? rect.top + window.scrollY - popoverHeight - 8
+      : rect.bottom + window.scrollY + 8;
+
+    setCoords({ mode: "anchored", top, left, width: rect.width });
   }
   setOpen((o) => !o);
 }
@@ -64,26 +78,30 @@ export function DatePicker({ value, onChange, className }) {
         {formatDisplay(value)}
       </Button>
       {open &&
-        createPortal(
-          <div
-            ref={popoverRef}
-            style={{ position: "absolute", top: coords.top, left: coords.left }}
-            className="z-50 rounded-lg border border-border bg-popover p-3 text-popover-foreground shadow-md"
-          >
-            <DayPicker
-              mode="single"
-              selected={selected}
-              onSelect={(date) => {
-                if (date) {
-                  const iso = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-                  onChange(iso);
-                }
-                setOpen(false);
-              }}
-            />
-          </div>,
-          document.body
-        )}
+  createPortal(
+    <div
+      ref={popoverRef}
+      style={
+        coords.mode === "center"
+          ? { position: "fixed", top: "50%", left: "50%", transform: "translate(-50%, -50%)" }
+          : { position: "absolute", top: coords.top, left: coords.left }
+      }
+      className="rdp-popover-mobile z-50 rounded-lg border border-border bg-popover p-3 text-popover-foreground shadow-md"
+    >
+      <DayPicker
+        mode="single"
+        selected={selected}
+        onSelect={(date) => {
+         if (date) {
+          const iso = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
+          onChange(iso);
+        }
+        setOpen(false);
+     }}
+/>
+    </div>,
+    document.body
+  )}
     </>
   );
 }

@@ -182,11 +182,9 @@
 }
 
 @media (max-width: 480px) {
-  .rdp-root {
-    font-size: 0.8rem;
-  }
-  .rdp-month_grid {
-    width: 100%;
+  .rdp-popover-mobile {
+    transform:scale(0.82);
+    transform-origin: top left;
   }
 }
 
