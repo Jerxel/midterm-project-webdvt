@@ -1,5 +1,5 @@
 import { memo } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { TableCell, TableRow } from "@/components/ui/table";
 
 /**
@@ -12,15 +12,15 @@ import { TableCell, TableRow } from "@/components/ui/table";
  */
 function TransactionRow({ transaction }) {
   const { id, date, description, category, type, amount } = transaction;
+  const navigate = useNavigate();
 
   return (
-    <TableRow>
+    <TableRow
+      onClick={() => navigate(`/transaction/${id}`)}
+      className="cursor-pointer"
+    >
       <TableCell>{date}</TableCell>
-      <TableCell>
-        <Link to={`/transaction/${id}`} className="hover:underline">
-          {description}
-        </Link>
-      </TableCell>
+      <TableCell>{description}</TableCell>
       <TableCell>{category}</TableCell>
       <TableCell className="capitalize">{type}</TableCell>
       <TableCell

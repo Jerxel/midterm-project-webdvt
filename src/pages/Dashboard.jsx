@@ -76,7 +76,7 @@ export default function Dashboard() {
               Balance
             </CardTitle>
           </CardHeader>
-          <CardContent className="text-lg sm:text-xl font-semibold break-words">
+          <CardContent className="text-lg sm:text-xl font-semibold wrap-break-word">
             ₱{balance.toFixed(2)}
           </CardContent>
         </Card>
