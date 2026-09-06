@@ -54,7 +54,7 @@ export default function Summary() {
                   <div className="flex items-center justify-between text-sm">
                     <span className="font-medium">{c.category}</span>
                     <span className="text-muted-foreground">
-                      ${c.amount.toFixed(2)} ({c.percent.toFixed(1)}%)
+                      ₱{c.amount.toFixed(2)} ({c.percent.toFixed(1)}%)
                     </span>
                   </div>
                   <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
@@ -68,7 +68,7 @@ export default function Summary() {
 
               <div className="flex items-center justify-between border-t border-border pt-3 text-sm font-semibold">
                 <span>Total Expenses</span>
-                <span>${totalExpenses.toFixed(2)}</span>
+                <span>₱{totalExpenses.toFixed(2)}</span>
               </div>
             </div>
           )}

@@ -172,7 +172,7 @@ export default function TransactionDetail() {
               <DetailRow label="Type" value={transaction.type} className="capitalize" />
               <DetailRow
                 label="Amount"
-                value={`${transaction.type === "income" ? "+" : "-"}$${transaction.amount.toFixed(2)}`}
+                value={`${transaction.type === "income" ? "+" : "-"}₱${transaction.amount.toFixed(2)}`}
                 className={transaction.type === "income" ? "text-green-600" : "text-red-500"}
               />
 

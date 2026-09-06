@@ -28,7 +28,7 @@ function TransactionRow({ transaction }) {
           type === "income" ? "text-green-600" : "text-red-500"
         }`}
       >
-        {type === "income" ? "+" : "-"}${amount.toFixed(2)}
+        {type === "income" ? "+" : "-"}₱{amount.toFixed(2)}
       </TableCell>
     </TableRow>
   );
