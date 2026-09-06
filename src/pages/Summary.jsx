@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { useTransactions } from "@/hooks/useTransactions";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Summary() {
   const { transactions } = useTransactions();
@@ -35,7 +34,6 @@ export default function Summary() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Summary</h1>
-        <ThemeToggle />
       </div>
 
       <Card>
