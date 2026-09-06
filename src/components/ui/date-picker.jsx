@@ -31,18 +31,24 @@ export function DatePicker({ value, onChange, className }) {
   }, []);
 
   function toggleOpen() {
-    if (!open && buttonRef.current) {
-      const rect = buttonRef.current.getBoundingClientRect();
-      const popoverHeight = 340; // approximate calendar height
-      setCoords({
-        top: rect.bottom + window.scrollY + 8,
-        top: rect.top + window.scrollY - popoverHeight - 8,
-        left: rect.left + window.scrollX,
-        width: rect.width,
-      });
+  if (!open && buttonRef.current) {
+    const rect = buttonRef.current.getBoundingClientRect();
+    const popoverHeight = 340; // approximate calendar height
+    const popoverWidth = 300; // approximate calendar width
+    const viewportWidth = window.innerWidth;
+    let left = rect.left + window.scrollX;
+    // Clamp so the popover doesn't overflow past the right edge
+    if (left + popoverWidth > viewportWidth) {
+      left = Math.max(8, viewportWidth - popoverWidth - 8);
     }
-    setOpen((o) => !o);
+    setCoords({
+      top: rect.top + window.scrollY - popoverHeight - 8,
+      left,
+      width: rect.width,
+    });
   }
+  setOpen((o) => !o);
+}
 
   const selected = value ? new Date(value + "T00:00:00") : undefined;
 
