@@ -181,6 +181,15 @@
   font-family: var(--font-sans);
 }
 
+@media (max-width: 480px) {
+  .rdp-root {
+    font-size: 0.8rem;
+  }
+  .rdp-month_grid {
+    width: 100%;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;
