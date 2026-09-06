@@ -52,7 +52,7 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <h1 className="text-2xl font-bold">Dashboard</h1>
         <Link to="/add" className={buttonVariants({ variant: "default" })}>
           Add Transaction
@@ -60,14 +60,14 @@ export default function Dashboard() {
       </div>
 
       {/* Summary cards */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
         <Card>
           <CardHeader>
             <CardTitle className="text-sm text-muted-foreground">
               Balance
             </CardTitle>
           </CardHeader>
-          <CardContent className="text-xl font-semibold">
+          <CardContent className="text-lg sm:text-xl font-semibold break-words">
             ₱{balance.toFixed(2)}
           </CardContent>
         </Card>
