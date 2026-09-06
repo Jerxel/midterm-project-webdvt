@@ -2,7 +2,7 @@ import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTransactions } from "@/hooks/useTransactions";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Table,
   TableBody,
@@ -13,7 +13,7 @@ import {
 import TransactionRow from "@/components/TransactionRow";
 
 export default function Dashboard() {
-  const { transactions } = useTransactions();
+  const { transactions, resetTransactions } = useTransactions();
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
 
@@ -49,6 +49,15 @@ export default function Dashboard() {
       return categoryMatch && typeMatch;
     });
   }, [transactions, categoryFilter, typeFilter]);
+
+    function handleReset() {
+    const confirmed = window.confirm(
+      "This will permanently delete all transactions. This cannot be undone. Are you sure?"
+    );
+    if (confirmed) {
+      resetTransactions();
+    }
+  }
 
   return (
     <div className="space-y-6">
@@ -99,11 +108,12 @@ export default function Dashboard() {
           <CardTitle>Transactions</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="flex flex-wrap gap-3">
-            <div className="space-y-1">
-              <label className="text-sm text-muted-foreground block">
-                Category
-              </label>
+          <div className="flex flex-wrap items-end justify-between gap-3">
+            <div className="flex flex-wrap gap-3">
+              <div className="space-y-1">
+                <label className="text-sm text-muted-foreground block">
+                  Category
+                </label>
               <select
                 value={categoryFilter}
                 onChange={(e) => setCategoryFilter(e.target.value)}
@@ -131,6 +141,12 @@ export default function Dashboard() {
                 <option value="expense">Expense</option>
               </select>
             </div>
+          </div>
+          {transactions.length > 0 && (
+              <Button variant="destructive" size="sm" onClick={handleReset}>
+                Reset All
+              </Button>
+            )}
           </div>
 
           {transactions.length === 0 ? (

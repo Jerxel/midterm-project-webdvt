@@ -71,10 +71,16 @@ export default function AddTransaction() {
             <div className="space-y-1">
               <label className="text-sm text-muted-foreground">Amount</label>
               <Input
-                type="number"
-                step="0.01"
+                type="text"
+                inputMode="decimal"
                 value={amount}
-                onChange={(e) => setAmount(e.target.value)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  // Only allow digits and a single decimal point
+                  if (val === "" || /^\d*\.?\d*$/.test(val)) {
+                  setAmount(val);
+                  }
+                }}
                 placeholder="0.00"
                 aria-invalid={!!errors.amount}
               />

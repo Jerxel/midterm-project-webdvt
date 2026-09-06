@@ -73,6 +73,10 @@ export function useTransactions() {
     setTransactions((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
+  const resetTransactions = useCallback(() => {
+    setTransactions([]);
+  }, []);
+
   const getTransaction = useCallback(
     (id) => transactions.find((t) => t.id === id),
     [transactions]
@@ -84,5 +88,6 @@ export function useTransactions() {
     updateTransaction,
     deleteTransaction,
     getTransaction,
+    resetTransactions,
   };
 }
