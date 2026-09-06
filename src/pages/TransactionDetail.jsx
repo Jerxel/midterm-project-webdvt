@@ -4,6 +4,7 @@ import { useTransactions } from "@/hooks/useTransactions";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { DatePicker } from "@/components/ui/date-picker";
 
 export default function TransactionDetail() {
   const { id } = useParams();
@@ -31,6 +32,7 @@ export default function TransactionDetail() {
       amount: transaction.amount,
       category: transaction.category,
       type: transaction.type,
+      date: transaction.date,
     });
   }
 
@@ -55,6 +57,7 @@ export default function TransactionDetail() {
       nextErrors.amount = "Amount must be a number greater than 0.";
     }
     if (!form.category.trim()) nextErrors.category = "Category is required.";
+    if (!form.date) nextErrors.date = "Date is required.";
     return nextErrors;
   }
 
@@ -69,6 +72,7 @@ export default function TransactionDetail() {
       amount: form.amount,
       category: form.category.trim(),
       type: form.type,
+      date: form.date,
     });
     setIsEditing(false);
   }
@@ -144,6 +148,17 @@ export default function TransactionDetail() {
                 </select>
               </div>
 
+              <div className="space-y-1">
+                <label className="text-sm text-muted-foreground">Date</label>
+                <DatePicker
+                  value={form.date}
+                  onChange={(date) => setForm({ ...form, date })}
+                />
+                {errors.date && (
+                  <p className="text-xs text-destructive">{errors.date}</p>
+                )}
+              </div>
+
               <div className="flex gap-2">
                 <Button type="submit">Save Changes</Button>
                 <Button
@@ -157,6 +172,7 @@ export default function TransactionDetail() {
                       amount: transaction.amount,
                       category: transaction.category,
                       type: transaction.type,
+                      date: transaction.date,
                     });
                   }}
                 >
@@ -166,15 +182,15 @@ export default function TransactionDetail() {
             </form>
           ) : (
             <div className="space-y-3 max-w-md">
-              <DetailRow label="Date" value={transaction.date} />
               <DetailRow label="Description" value={transaction.description} />
-              <DetailRow label="Category" value={transaction.category} />
-              <DetailRow label="Type" value={transaction.type} className="capitalize" />
               <DetailRow
                 label="Amount"
                 value={`${transaction.type === "income" ? "+" : "-"}₱${transaction.amount.toFixed(2)}`}
                 className={transaction.type === "income" ? "text-green-600" : "text-red-500"}
               />
+              <DetailRow label="Category" value={transaction.category} />
+              <DetailRow label="Type" value={transaction.type} className="capitalize" />
+              <DetailRow label="Date" value={transaction.date} />
 
               <div className="flex gap-2 pt-2">
                 <Button onClick={() => setIsEditing(true)}>Edit</Button>

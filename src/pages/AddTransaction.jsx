@@ -101,7 +101,7 @@ export default function AddTransaction() {
               <select
                 value={type}
                 onChange={(e) => setType(e.target.value)}
-                className="w-full h-9 rounded-md border border-input bg-background px-3 text-sm"
+                className="w-full h-9 rounded-md border border-input bg-background px-3 text-sm appearance-none hover:bg-muted transition-colors"
               >
                 <option value="expense">Expense</option>
                 <option value="income">Income</option>
