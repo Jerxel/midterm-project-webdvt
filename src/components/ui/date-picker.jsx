@@ -59,7 +59,7 @@ export function DatePicker({ value, onChange, className }) {
       ? rect.top + window.scrollY - popoverHeight - 8
       : rect.bottom + window.scrollY + 8;
 
-    setCoords({ mode: "anchored", top, left, width: rect.width });
+    setCoords({ mode: "anchored", top, left });
   }
   setOpen((o) => !o);
 }
