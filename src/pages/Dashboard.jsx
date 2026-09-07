@@ -16,6 +16,7 @@ export default function Dashboard() {
   const { transactions, resetTransactions } = useTransactions();
   const [categoryFilter, setCategoryFilter] = useState("all");
   const [typeFilter, setTypeFilter] = useState("all");
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   // Distinct categories present in the data, for the filter dropdown
   const categories = useMemo(() => {
@@ -50,13 +51,13 @@ export default function Dashboard() {
     });
   }, [transactions, categoryFilter, typeFilter]);
 
-    function handleReset() {
-    const confirmed = window.confirm(
-      "This will permanently delete all transactions. This cannot be undone. Are you sure?"
-    );
-    if (confirmed) {
-      resetTransactions();
-    }
+  function handleReset() {
+    setShowResetConfirm(true);
+  }
+
+  function confirmReset() {
+    resetTransactions();
+    setShowResetConfirm(false);
   }
 
   return (
@@ -114,35 +115,35 @@ export default function Dashboard() {
                 <label className="text-sm text-muted-foreground block">
                   Category
                 </label>
-              <select
-                value={categoryFilter}
-                onChange={(e) => setCategoryFilter(e.target.value)}
-                className="h-9 rounded-md border border-input bg-background px-3 text-sm"
-              >
-                <option value="all">All categories</option>
-                {categories.map((c) => (
-                  <option key={c} value={c}>
-                    {c}
-                  </option>
-                ))}
-              </select>
+                <select
+                  value={categoryFilter}
+                  onChange={(e) => setCategoryFilter(e.target.value)}
+                  className="h-9 rounded-md border border-input bg-background px-3 text-sm"
+                >
+                  <option value="all">All categories</option>
+                  {categories.map((c) => (
+                    <option key={c} value={c}>
+                      {c}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="space-y-1">
+                <label className="text-sm text-muted-foreground block">
+                  Type
+                </label>
+                <select
+                  value={typeFilter}
+                  onChange={(e) => setTypeFilter(e.target.value)}
+                  className="h-9 rounded-md border border-input bg-background px-3 text-sm"
+                >
+                  <option value="all">All types</option>
+                  <option value="income">Income</option>
+                  <option value="expense">Expense</option>
+                </select>
+              </div>
             </div>
-            <div className="space-y-1">
-              <label className="text-sm text-muted-foreground block">
-                Type
-              </label>
-              <select
-                value={typeFilter}
-                onChange={(e) => setTypeFilter(e.target.value)}
-                className="h-9 rounded-md border border-input bg-background px-3 text-sm"
-              >
-                <option value="all">All types</option>
-                <option value="income">Income</option>
-                <option value="expense">Expense</option>
-              </select>
-            </div>
-          </div>
-          {transactions.length > 0 && (
+            {transactions.length > 0 && (
               <Button variant="destructive" size="sm" onClick={handleReset}>
                 Reset All
               </Button>
@@ -181,6 +182,29 @@ export default function Dashboard() {
           )}
         </CardContent>
       </Card>
+
+      {showResetConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <Card className="max-w-sm w-full">
+            <CardHeader>
+              <CardTitle>Reset all transactions?</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-sm text-muted-foreground">
+                This will permanently delete all transactions. This cannot be undone.
+              </p>
+              <div className="flex gap-2 justify-end">
+                <Button variant="outline" onClick={() => setShowResetConfirm(false)}>
+                  Cancel
+                </Button>
+                <Button variant="destructive" onClick={confirmReset}>
+                  Delete All
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }
