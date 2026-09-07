@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { DatePicker } from "@/components/ui/date-picker";
+import { formatCurrency } from "@/lib/utils";
 
 export default function TransactionDetail() {
   const { id } = useParams();
@@ -113,10 +114,16 @@ export default function TransactionDetail() {
               <div className="space-y-1">
                 <label className="text-sm text-muted-foreground">Amount</label>
                 <Input
-                  type="number"
-                  step="0.01"
+                  type="text"
+                  inputMode="decimal"
                   value={form.amount}
-                  onChange={(e) => setForm({ ...form, amount: e.target.value })}
+                  onChange={(e) => {
+                    const val = e.target.value;
+                    // Only allow digits and a single decimal point
+                    if (val === "" || /^\d*\.?\d*$/.test(val)) {
+                      setForm({ ...form, amount: val });
+                    }
+                  }}
                   aria-invalid={!!errors.amount}
                 />
                 {errors.amount && (
@@ -185,7 +192,7 @@ export default function TransactionDetail() {
               <DetailRow label="Description" value={transaction.description} />
               <DetailRow
                 label="Amount"
-                value={`${transaction.type === "income" ? "+" : "-"}₱${transaction.amount.toFixed(2)}`}
+                value={`${transaction.type === "income" ? "+" : "-"}₱${formatCurrency(transaction.amount)}`}
                 className={transaction.type === "income" ? "text-green-600" : "text-red-500"}
               />
               <DetailRow label="Category" value={transaction.category} />

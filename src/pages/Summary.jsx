@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useTransactions } from "@/hooks/useTransactions";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { formatCurrency } from "@/lib/utils";
 
 export default function Summary() {
   const { transactions } = useTransactions();
@@ -52,7 +53,7 @@ export default function Summary() {
                   <div className="flex items-center justify-between text-sm">
                     <span className="font-medium">{c.category}</span>
                     <span className="text-muted-foreground">
-                      ₱{c.amount.toFixed(2)} ({c.percent.toFixed(1)}%)
+                      ₱{formatCurrency(c.amount)} ({c.percent.toFixed(1)}%)
                     </span>
                   </div>
                   <div className="h-2 w-full rounded-full bg-muted overflow-hidden">
@@ -66,7 +67,7 @@ export default function Summary() {
 
               <div className="flex items-center justify-between border-t border-border pt-3 text-sm font-semibold">
                 <span>Total Expenses</span>
-                <span>₱{totalExpenses.toFixed(2)}</span>
+                <span>₱{formatCurrency(totalExpenses)}</span>
               </div>
             </div>
           )}

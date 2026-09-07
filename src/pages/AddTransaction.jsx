@@ -60,7 +60,7 @@ export default function AddTransaction() {
               <Input
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder="e.g. Groceries"
+                placeholder="e.g. Hamburger"
                 aria-invalid={!!errors.description}
               />
               {errors.description && (

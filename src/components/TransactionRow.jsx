@@ -1,6 +1,7 @@
 import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { TableCell, TableRow } from "@/components/ui/table";
+import { formatCurrency } from "@/lib/utils";
 
 /**
  * Performance optimization:
@@ -28,7 +29,7 @@ function TransactionRow({ transaction }) {
           type === "income" ? "text-green-600" : "text-red-500"
         }`}
       >
-        {type === "income" ? "+" : "-"}₱{amount.toFixed(2)}
+         {type === "income" ? "+" : "-"}₱{formatCurrency(amount)}
       </TableCell>
     </TableRow>
   );

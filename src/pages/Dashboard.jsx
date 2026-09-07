@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useTransactions } from "@/hooks/useTransactions";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { formatCurrency } from "@/lib/utils";
 import {
   Table,
   TableBody,
@@ -78,7 +79,7 @@ export default function Dashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent className="text-lg sm:text-xl font-semibold wrap-break-word">
-            ₱{balance.toFixed(2)}
+            ₱{formatCurrency(balance)}
           </CardContent>
         </Card>
         <Card>
@@ -88,7 +89,7 @@ export default function Dashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent className="text-xl font-semibold text-green-600">
-            ₱{totalIncome.toFixed(2)}
+            ₱{formatCurrency(totalIncome)}
           </CardContent>
         </Card>
         <Card>
@@ -98,7 +99,7 @@ export default function Dashboard() {
             </CardTitle>
           </CardHeader>
           <CardContent className="text-xl font-semibold text-red-500">
-            ₱{totalExpenses.toFixed(2)}
+            ₱{formatCurrency(totalExpenses)}
           </CardContent>
         </Card>
       </div>
